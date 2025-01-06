@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	var firstName string
@@ -10,7 +13,7 @@ func main() {
 	var remaingTickets uint = 50
 
 	//var bookings [50]string //array (static size)
-	var bookings2 []string //slice (dynamic size)
+	var bookings []string //slice (dynamic size)
 	var userTickets uint
 
 	fmt.Println("Welcome to the " + conferenceName)
@@ -36,9 +39,14 @@ func main() {
 
 		//bookings[0] = "booking 1"
 
-		bookings2 = append(bookings2, firstName+" "+lastName)
+		bookings = append(bookings, firstName+" "+lastName)
 
-		fmt.Printf("these are all our bookings: %v \n", bookings2)
-		//fmt.Printf("ten %v tuoi %v", firstName, lastName)
+		firstNames := []string{}
+		for _, booking := range bookings { //(index, booking: mỗi phần tử trong bookings sẽ có giá trị riêng biệt, sử dụng _ để không bị lỗi khôg dùng index)
+			var names = strings.Fields(booking)
+			firstNames = append(firstNames, names[0])
+		}
+		fmt.Printf("these are all our bookings: %v \n", bookings)
+		fmt.Printf("these are all our first names: %v  \n", firstNames)
 	}
 }
