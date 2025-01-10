@@ -12,6 +12,13 @@ func checkIsValid(x string) bool {
 	return true
 }
 
+func divide(dividend, divisor float64) (float64, error) {
+	if divisor == 0 {
+		return 0, fmt.Errorf("Cannot divide by zero")
+	}
+	return dividend / divisor, nil
+}
+
 func main() {
 	var firstName string
 	var lastName string
@@ -44,8 +51,10 @@ func main() {
 			fmt.Println("Your first name and last name must be at least 3 characters long")
 			continue
 		}
-		if lengthOfEmail := len(email); lengthOfEmail < 1 {
+
+		if !checkIsValid(email) {
 			fmt.Println("Email is invalid")
+			continue
 		}
 
 		if userTickets > remaingTickets {
@@ -74,5 +83,7 @@ func main() {
 			fmt.Println("Our conference is full now. Thank you for booking tickets")
 			break
 		}
+
+		//fmt.Println(divide(10, 0))
 	}
 }
