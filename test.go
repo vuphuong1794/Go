@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// struct
 type messageToSend struct {
 	phoneNumber int
 	message     string
