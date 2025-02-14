@@ -2,19 +2,46 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
-type messageToSend struct {
-	phoneNumber int
-	message     string
+func sendMessage(msg message) {
+	fmt.Println(msg.getMessage())
 }
 
-func test(m messageToSend) {
-	fmt.Println("Sending message to ", m.phoneNumber)
-	fmt.Println("Message: ", m.message)
+type message interface {
+	getMessage() string
 }
 
+type birthdayMessage struct {
+	birthdayTime  time.Time
+	recipientName string
+}
+
+func (bm birthdayMessage) getMessage() string {
+	return fmt.Sprintf("Hi %s, it is your birthday on %s", bm.recipientName, bm.birthdayTime.Format(time.RFC3339))
+}
+
+type sendingReport struct {
+	reportName    string
+	numberOfSends int
+}
+
+func (sr sendingReport) getMessage() string {
+	return fmt.Sprintf(`Your "%s" report is ready. You've sent %v messages.`, sr.reportName, sr.numberOfSends)
+}
+
+func test(m message) {
+	sendMessage(m)
+	fmt.Println("=======================")
+}
 func main() {
-	test(messageToSend{1234567890, "Hello World"})
-	test(messageToSend{9876543210, "Hello phuong"})
+	test(sendingReport{
+		reportName:    "firt report",
+		numberOfSends: 10,
+	})
+	test(birthdayMessage{
+		birthdayTime:  time.Now(),
+		recipientName: "John",
+	})
 }
